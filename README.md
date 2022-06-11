@@ -7,6 +7,22 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## Steps to clone project
+#Prerequisite<br>
+    1)XAMPP<br>
+Go to a desired folder in command prompt and run these commands one by one: <br>
+
+    git clone https://github.com/Harsh15699/online_auction.git<br>
+    cd online_auction<br>
+    composer install<br>
+    
+    Add the .env file and images folder shared with you
+ Create a new database online_auction<br>
+ 
+ run:<br>
+ 
+ php artisan migrate<br>
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
