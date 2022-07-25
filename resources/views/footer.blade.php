@@ -58,7 +58,7 @@
                 <a href="{{ route('player_login') }}" class="text-reset">Player Login</a>
               </p>
               <p>
-                <a href="#!" class="text-reset">Team</a>
+                <a href="{{ route('team_dashboard') }}" class="text-reset">Team Dashboard</a>
               </p>
               <p>
                 <a href="{{ route('team_login') }}" class="text-reset">Team Login</a>
@@ -75,10 +75,10 @@
                 <a href="{{ route('user_login') }}" class="text-reset">Login</a>
               </p>
               <p>
-                <a href="#!" class="text-reset">Register Product</a>
+                <a href="{{ route('user_dashboard') }}" class="text-reset">User Dashboard</a>
               </p>
               <p>
-                <a href="#!" class="text-reset">Bid</a>
+                <a href="{{ route('home') }}" class="text-reset">Home</a>
               </p>
             </div>
             <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">

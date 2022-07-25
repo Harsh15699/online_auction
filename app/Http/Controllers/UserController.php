@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Products;
+use App\Models\Team;
 use App\Models\CommodityAuction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ class UserController extends Controller
 {
 
     public function __construct(){
-        $this->middleware('auth:user',['only'=>['getUserDashboard','getUserProducts']]);
+        $this->middleware('auth:user',['only'=>['getUserDashboard','getUserProducts','getUserWallet']]);
     }
 
     public function getUserRegistrationPage(){
@@ -68,7 +69,7 @@ class UserController extends Controller
         );
         $user=User::create($dataArray);
         if(!is_null($user)) {
-            return back()->with("success", "Success! Registration completed");
+          return redirect(route('user_login'));
         }
         else {
             return back()->with("failed", "Alert! Failed to register");
@@ -83,7 +84,7 @@ class UserController extends Controller
         );
 
       if ($token = auth('user')->attempt($dataArray)) {
-            $request->session()->regenerate();
+            // $request->session()->regenerate();
             return redirect(route('user_dashboard'));
         }
       else{
@@ -92,8 +93,8 @@ class UserController extends Controller
     }
 
     public function userLogout(Request $request){
-        Auth::logout();
-        $request->session()->invalidate();
+        Auth::guard('user')->logout();
+        // $request->session()->invalidate();
         return redirect(route('user_login'));
     }
 
@@ -172,9 +173,11 @@ class UserController extends Controller
               $dataArray["sold"]='1';
               $dataArray["sold_price"]=$json["current_bid"];
               $dataArray["buyer_id"]=$json["last_bidder_id"];
+              $user=User::where('id',$dataArray["buyer_id"])->decrement('wallet_balance',$dataArray["sold_price"]);
             }
           Products::where('id',$id)->update($dataArray);
           $json["current_bid"]=0;
+          $json["last_bidder_id"]=0;
           $jsonString=json_encode($json);
           file_put_contents($path, $jsonString);
           
@@ -187,10 +190,10 @@ class UserController extends Controller
         $json = json_decode(file_get_contents($path), true);
         $json["last_bidder_id"]=$id;
         if($json["current_bid"]==0){
-            $json["current_bid"]=$json["base_price"]+50;
+            $json["current_bid"]=$json["base_price"]+100;
           }
         else {
-          $json["current_bid"]+=50;
+          $json["current_bid"]+=100;
         }
         $jsonString=json_encode($json);
         file_put_contents($path, $jsonString);
@@ -202,21 +205,71 @@ class UserController extends Controller
         $path = public_path() . "\json\commodity_auction.json";
         $json = json_decode(file_get_contents($path), true);
         $last_bidder_id=$json["last_bidder_id"];
-        $user=User::where('id',$last_bidder_id)->first();
-        $dataArray      =       array(
-          "current_bid"         =>          $json["current_bid"],
-          "current_bidder"         =>          0,
-          "last_bidder"         =>          $user->first_name
-        );
-        if($id==$last_bidder_id){
-          $dataArray['current_bidder']=1;
+        $current_user=User::where('id',$id)->first();
+        if($last_bidder_id!=0){
+          $user=User::where('id',$last_bidder_id)->first();
+          $dataArray      =       array(
+            "current_bid"         =>          $json["current_bid"],
+            "current_bidder"         =>          0,
+            "last_bidder"         =>          $user->first_name,
+            "bidding_eligibility"  =>         0,
+            "is_seller"           =>          0
+          );
+          if($id==$last_bidder_id){
+            $dataArray['current_bidder']=1;
+          }
+          if( $dataArray['current_bid']+100>$current_user->wallet_balance){
+            $dataArray['bidding_eligibility']=1;
+          }
+          if( $json["seller_id"]==$id){
+            $dataArray['is_seller']=1;
+          }
         }
+        else{
+          $dataArray      =       array(
+            "current_bid"         =>          $json["current_bid"],
+            "current_bidder"         =>          0,
+            "last_bidder"         =>          "You are first one",
+            "bidding_eligibility"  =>         0
+          );
+
+          if($json["base_price"]+100>$current_user->wallet_balance){
+            $dataArray['bidding_eligibility']=1;
+          }
+          if( $json["seller_id"]==$id){
+            $dataArray['is_seller']=1;
+          }
+        }
+        \Log::info($dataArray);
+       
 
         return response()->json([
           "success" => 1,
           "error" => 0,
           "data" => $dataArray
       ]);
-      }
-
     }
+
+    // public function addNewTeam(){
+    //     $dataArray      =       array(
+    //       "team_name"         =>          "Kolkata Sixers",
+    //       "owner_name"         =>          "Gambhir",
+    //       "email"         =>          "kolkata@cpl.com",
+    //       "mobile"         =>          "7123456786",
+    //       "username"         =>          "Team8",
+    //       "password"         =>          Hash::make("team"),
+    //     );
+    //     Team::create($dataArray);
+    // }
+
+    public function getUserWallet(){
+      $id=auth('user')->id();
+      $user=User::where('id',$id)->first();
+      return view('user_wallet')->with('balance',$user->wallet_balance);
+    }
+    public function changeUserWallet(){
+      $id=auth('user')->id();
+      $user=User::where('id',$id)->increment('wallet_balance',1000);
+      return redirect(route('user_wallet'));
+    }
+  }

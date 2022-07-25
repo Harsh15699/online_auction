@@ -16,22 +16,22 @@
   </div>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="{{ url('/images/commodity_auction/') }}/sale1.jpg" class="d-block w-100" alt="...">
+      <img src="{{ url('/images/commodity_auction/') }}/ca1.png" class="d-block w-100" alt="...">
     </div>
     <div class="carousel-item">
-      <img src="{{ url('/images/commodity_auction/') }}/fashionSale1.jpg" class="d-block w-100" alt="...">
+      <img src="{{ url('/images/commodity_auction/') }}/ca2.png" class="d-block w-100" alt="...">
     </div>
     <div class="carousel-item">
-      <img src="{{ url('/images/commodity_auction/') }}/headphone_sale1.jpg" class="d-block w-100" alt="...">
+      <img src="{{ url('/images/commodity_auction/') }}/ca3.png" class="d-block w-100" alt="...">
     </div>
     <div class="carousel-item">
-      <img src="{{ url('/images/commodity_auction/') }}/sale1.jpg" class="d-block w-100" alt="...">
+      <img src="{{ url('/images/commodity_auction/') }}/ca4.png" class="d-block w-100" alt="...">
     </div>
     <div class="carousel-item">
-      <img src="{{ url('/images/commodity_auction/') }}/fashionSale1.jpg" class="d-block w-100" alt="...">
+      <img src="{{ url('/images/commodity_auction/') }}/ca5.png" class="d-block w-100" alt="...">
     </div>
     <div class="carousel-item">
-      <img src="{{ url('/images/commodity_auction/') }}/headphone_sale1.jpg" class="d-block w-100" alt="...">
+      <img src="{{ url('/images/commodity_auction/') }}/ca6.png" class="d-block w-100" alt="...">
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -99,7 +99,7 @@
     <div class="row">
       <div class="col-4">
         <div class="card" style="width: 25rem;height:70vh;">
-          <img src="{{ url('/images/index/') }}/watch_image_index.jpg" class="card-img-top" alt="...">
+          <img src="{{ url('/images/product_images/') }}/{{$current_auction->product_detail->product_image}}" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">Ends-In: <span id="timer{{$current_auction->product_id}}"></span></h5>
             <a href="{{ route('user_dashboard') }}" class="btn btn-primary" style="width:40%;margin-left:20%;">Go To Dashboard</a>
@@ -107,7 +107,7 @@
         </div>
       </div>
       <div class="col-8">
-        <h3>Product Name: {{$current_auction->product_detail->product_name}}</h3>
+        <h3>Product Name:{{$current_auction->product_detail->product_name}}</h3>
         <h3>Description</h3>
         <p>{{$current_auction->product_detail->description}}</p>
         <h2>Wanna Bid!</h2>
@@ -115,11 +115,14 @@
         <br><br>
         <div class="row">
           <div class="col-4">
-            <p>Base Price:<br><span style="font-size:150%;font-weight:bold;"><i class="fa fa-rupee"></i>{{$current_auction->product_detail->base_price}} </span><del><i class="fa fa-rupee"></i>{{$current_auction->product_detail->MRP}}</del><span style="color:green;font-size:120%;"> 90% off</span></p>
+            <p>Base Price:<br><span style="font-size:150%;font-weight:bold;"><i class="fa fa-rupee"></i>{{$current_auction->product_detail->base_price}} </span><del><i class="fa fa-rupee"></i>{{$current_auction->product_detail->MRP}}</del><span style="color:green;font-size:120%;"> {{$current_auction->product_detail->discount}}% off</span></p>
           </div>
           <div class="col-4">
-            <p style="color:red;">Current Bid:<br><span style="font-size:150%;font-weight:bold;"><i class="fa fa-rupee"></i>1500</span></p>
-          </div>
+          <p style="color:red;">Current Bid:<br><span style="font-size:150%;font-weight:bold;" ><i class="fa fa-rupee"></i></span><span style="font-size:150%;font-weight:bold;" id="current_bid"></span></p>
+        </div>
+        <div class="col-4">
+          <p style="color:Blue;">Current Bidder:<br><span style="font-size:150%;font-weight:bold;" id="current_bidder"></span></p>
+        </div>
         </div>
       </div>
     </div>
@@ -137,9 +140,9 @@
       @endif
         <div class="col-3">
           <div class="card" style="width: 18rem;">
-            <img src="{{ url('/images/index/') }}/watch_image_index.jpg" class="card-img-top" alt="...">
+            <img src="{{ url('/images/product_images/') }}/{{$commodity_auction->product_detail->product_image}}" class="card-img-top" alt="...">
             <div class="card-body">
-              <p><span style="font-size:150%;font-weight:bold;"><i class="fa fa-rupee"></i>{{$commodity_auction->product_detail->base_price}} </span><del><i class="fa fa-rupee"></i>{{$commodity_auction->product_detail->MRP}}</del><span style="color:green;font-size:120%;"> 90% off</span></p>
+              <p><span style="font-size:150%;font-weight:bold;"><i class="fa fa-rupee"></i>{{$commodity_auction->product_detail->base_price}} </span><del><i class="fa fa-rupee"></i>{{$commodity_auction->product_detail->MRP}}</del><span style="color:green;font-size:120%;"> {{$commodity_auction->product_detail->discount}}% off</span></p>
               <h3>{{$commodity_auction->product_detail->product_name}}</h3>
               <h5 class="card-title">Starts-In: <span id="timer{{$commodity_auction->product_id}}"><script></script></span></h5>
               <!-- <a href="#" class="btn btn-primary" style="width:40%;margin-left:30%;margin-top:5%;">Bid Now</a> -->
@@ -172,10 +175,6 @@
     document.getElementById("timer{{$commodity_auction->product_id}}").innerHTML = Math.floor((t[{{$commodity_auction->product_id}}] % (1000 * 60 * 60)) / (1000 * 60)) + "m " + Math.floor((t[{{$commodity_auction->product_id}}] % (1000 * 60)) / 1000) + "s ";
         if (t[{{$commodity_auction->product_id}}] < 0) {
             clearInterval(x[{{$commodity_auction->product_id}}]);
-            let url = "{{ route('complete_bidding_process', ':id') }}";
-            url = url.replace(':id', {{$commodity_auction->product_id}});
-            document.location.href=url;
-
         }
     }, 1000);
 
@@ -198,6 +197,30 @@
 
         }
     }, 1000);
+
+    var check_bid=0; 
+function updateCurrentBid() {
+  $.ajax({
+      type: "get",
+      url:"{{ route('get_current_bid') }}",
+      success: function(result) {
+        if(result.success==1){
+          var x=result.data;
+          document.getElementById("current_bid").innerHTML=x['current_bid'];
+          document.getElementById("current_bidder").innerHTML=x['last_bidder'];
+          if(x['current_bidder']==1){
+            check_bid=1;
+          }
+          else{
+            check_bid=0;
+          }
+        }
+      }
+    }) 
+  setTimeout(updateCurrentBid, 5000);
+}
+
+updateCurrentBid();
 
 </script>
 @endif

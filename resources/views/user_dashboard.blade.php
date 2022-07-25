@@ -8,15 +8,15 @@
       </div>
       <div class="modal-body">
         <div class="container rounded bg-white mt-5 mb-5">
-          <form method="POST" class="register-form" action="{{ route('user_update') }}" id="register-form">
+          <form method="POST" class="register-form" action="{{ route('user_update') }}" id="register-form" >
             @csrf
             <div class="row">
                 <div class="col-md-3 border-right"  style="background-color:#f5bbcc;">
                     <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">{{$user->first_name}} {{$user->last_name}}</span><span class="text-black-50">{{$user->email}}</span><span> </span></div>
                     <a class="nav-link active" aria-current="page" href="{{ route('user_products') }}">Your Products</a>
                     <a class="nav-link active" aria-current="page" href="{{ route('user_purchase') }}">Your Bids</a>
-                    <a class="nav-link active" aria-current="page" href="{{ route('home') }}">Balance</a>
-                    <a class="nav-link active" aria-current="page" href="{{ route('home') }}">Manage Bank Account</a>
+                    <a class="nav-link active" aria-current="page" href="{{ route('user_wallet') }}">Balance</a>
+                    <!-- <a class="nav-link active" aria-current="page" href="{{ route('home') }}">Manage Bank Account</a> -->
                     <a class="nav-link active" aria-current="page" href="{{ route('user_logout') }}">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a>
                 </div>
                 <div class="col-md-5 border-right">
@@ -69,7 +69,7 @@
   <div class="row">
     <div class="col-4">
       <div class="card" style="width: 25rem;height:70vh;">
-        <img src="{{ url('/images/index/') }}/watch_image_index.jpg" class="card-img-top" alt="...">
+        <img src="{{ url('/images/product_images/') }}/{{$current_auction->product_detail->product_image}}" class="card-img-top" alt="...">
         <div class="card-body">
           <h5 class="card-title">Ends-In: <span id="ends_in"></span></h5>
           <a type="button" class="btn btn-primary" style="width:40%;margin-left:20%;" id="bid_btn" onclick="checkBid()">Bid Now</a>
@@ -97,6 +97,10 @@
     </div>
   </div>
 </div>
+@else
+  <br>
+  <h2>No current Auction as of now</h2><br>
+  <h2>Visit <span style="color:green;">My Profile</span> Section for details related to you</h2><br><br><br>
 @endif
 </main>
 @include('footer')
@@ -121,6 +125,8 @@
   }, 1000);
 
 var check_bid=0; 
+var check_bal=0;
+var is_seller=0;
 function updateCurrentBid() {
   $.ajax({
       type: "get",
@@ -136,6 +142,18 @@ function updateCurrentBid() {
           else{
             check_bid=0;
           }
+          if(x['bidding_eligibility']==1){
+            check_bal=1;
+          }
+          else{
+            check_bal=0;
+          }
+          if(x['is_seller']==1){
+            is_seller=1;
+          }
+          else{
+            is_seller=0;
+          }
         }
       }
     }) 
@@ -147,6 +165,14 @@ updateCurrentBid();
 function checkBid(){
   if(check_bid==1){
     alert("You are the last bidder.Wait for others to bid");
+    return false;
+  }
+  else if(check_bal==1){
+    alert("You don't have insufficient balance");
+    return false;
+  }
+  else if(is_seller==1){
+    alert("You are the seller,you can't bid for the product");
     return false;
   }
   else{

@@ -36,6 +36,8 @@
                 </li>
                 <li class="nav-item px-2" id="my-profile">
                 </li>
+                <li class="nav-item px-2" id="logout-btn">
+                </li>
               </ul>
             </div>
             <h1>Online Auction</h1>
