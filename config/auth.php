@@ -48,6 +48,14 @@ return [
             'driver' => 'session',
             'provider' => 'admin',
         ],
+        'team' => [
+            'driver' => 'session',
+            'provider' => 'team',
+        ],
+        'player' => [
+            'driver' => 'session',
+            'provider' => 'player',
+        ],
     ],
 
     /*
@@ -75,6 +83,14 @@ return [
         'admin' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
+        ],
+        'team' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Team::class,
+        ],
+        'player' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Player::class,
         ],
 
         // 'users' => [

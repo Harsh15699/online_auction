@@ -13,7 +13,7 @@
       @endif
         <div class="col-3">
           <div class="card" style="width: 18rem;">
-            <img src="{{ url('/images/index/') }}/watch_image_index.jpg" class="card-img-top" alt="...">
+            <img src="{{ url('/images/product_images/') }}/{{$product->product_image}}" class="card-img-top" alt="...">
             <div class="card-body">
               <p><span style="font-size:150%;font-weight:bold;"><i class="fa fa-rupee"></i>{{$product->base_price}} </span><del><i class="fa fa-rupee"></i>{{$product->MRP}}</del><span style="color:green;font-size:120%;"> {{$product->discount}}% off</span>@if($product->verified==1)<span style="color:#0da2ff;font-size:150%;float:right;"><i class="fa fa-check"></i></span>@endif</p>
               <h3>{{$product->product_name}}</h3>
@@ -29,8 +29,14 @@
         $count++;
         @endphp
       @endforeach
+      @if($count==0)
+        <h4>You haven't bid for any product yet.</h4><br><br><br>
+      @endif
   </div>
   @endif
   
 </main>
 @include('footer')
+<script>
+  document.getElementById('my-profile').innerHTML="<a href='{{route('user_dashboard')}}' class='nav-link' >User Dashboard <i class='fa fa-solid fa-user-circle'></i></a>";
+</script>

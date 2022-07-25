@@ -7,7 +7,7 @@
         <div class="signin-content">
             <div class="signin-image">
                 <figure><img src="{{ url('/images/signup/') }}/signin-image.jpg" alt="sing up image"></figure>
-                <a href="#" class="signup-image-link">Create an account</a>
+                <a href="{{ route('user_registration') }}" class="signup-image-link">Create an account</a>
             </div>
 
             <div class="signin-form">
@@ -16,15 +16,11 @@
                   @csrf
                     <div class="form-group">
                         <label for="your_name"><i class="fa fa-user" aria-hidden="true"></i></label>
-                        <input type="text" name="email" id="email" placeholder="Your Email"/>
+                        <input type="text" name="email" id="email" placeholder="Your Email" required/>
                     </div>
                     <div class="form-group">
                         <label for="your_pass"><i class="fa fa-solid fa-lock"></i></label>
-                        <input type="password" name="pass" id="pass" placeholder="Password"/>
-                    </div>
-                    <div class="form-group">
-                        <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
-                        <label for="remember-me" class="label-agree-term"><span><span></span></span>Remember me</label>
+                        <input type="password" name="pass" id="pass" placeholder="Password" required/>
                     </div>
                     <div class="form-group form-button">
                         <input type="submit" name="signin" id="signin" class="form-submit" value="Log in"/>

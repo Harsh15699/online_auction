@@ -12,10 +12,10 @@
   </div>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="{{ url('/images/commodity_auction/') }}/sale1.jpg" class="d-block w-100" alt="...">
+      <img src="{{ url('/images/commodity_auction/') }}/cricket_auction.png" class="d-block w-100" alt="...">
     </div>
     <div class="carousel-item">
-      <img src="{{ url('/images/commodity_auction/') }}/fashionSale1.jpg" class="d-block w-100" alt="...">
+      <img src="{{ url('/images/commodity_auction/') }}/cricket_auction_old.jpg" class="d-block w-100" alt="...">
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -65,12 +65,12 @@
         <div class="col-6">
           <h4>If you haven't registered for the upcoming auction yet</h4>
           <br>
-          <a href="{{ route('user_registration') }}" class="btn btn-lg" style="background-color:#F5F5DC;">Register Now <i class=" fa fa-solid fa-arrow-right"></i></a>
+          <a href="{{ route('player_registration') }}" class="btn btn-lg" style="background-color:#F5F5DC;">Register Now <i class=" fa fa-solid fa-arrow-right"></i></a>
         </div>
         <div class="col-6">
           <h4>If you have already registered and want to see the update</h4>
           <br>
-          <a href="{{ route('user_login') }}" class="btn btn-lg" style="background-color:#F5F5DC;">Log In Now <i class=" fa fa-solid fa-arrow-right"></i></a>
+          <a href="{{ route('player_login') }}" class="btn btn-lg" style="background-color:#F5F5DC;">Log In Now <i class=" fa fa-solid fa-arrow-right"></i></a>
         </div>
       </div>
 

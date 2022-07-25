@@ -1,14 +1,14 @@
 @include('header')
+<form method="POST" class="register-form" action="{{ route('player_signup') }}" id="register-form" enctype="multipart/form-data">
+  @csrf
 <div class="container rounded bg-white mt-5 mb-5">
 <div class="row">
 <div class="col-md-3 border-right">
-    <img src="{{ url('/images/signup/') }}/signup-image.jpg" alt="sing up image">
+    <img src="{{ url('/images/signup/') }}/signup-image.jpg" alt="sing up image"><br><br>
+    <h5>Already Registered?<a href="{{ route('player_login') }}">Login</a> </h5>
 </div>
 <div class="col-md-5 border-right">
     <div class="p-3 py-5">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4 class="text-right">Profile Settings</h4>
-        </div>
         <div class="row mt-2">
             <div class="col-md-6"><label class="labels">First Name</label><input type="text" placeholder="first name" class="form-control" name="fname" id="fname" pattern="[A-Za-z]+" oninput="myfunction1()" title="First Name Should Only Contain Alphabet" required></div>
             <div class="col-md-6"><label class="labels">Last Name</label><input type="text" placeholder="last name" class="form-control" name="lname" id="lname" pattern="[A-Za-z]+" oninput="myfunction1()" title=" First Name Should Only Contain Alphabet" required></div>
@@ -20,18 +20,18 @@
           <div class="col-md-12"><label class="labels">Country</label><input type="text" class="form-control" placeholder="enter country" name="country" id="country" pattern="[A-Za-z]+" oninput="myfunction3()" title="Country Name Should Only Contain Alphabet" required></div>
           <div id="d3" style="color:red;"></div>
           <div class="col-md-12"><label class="labels">Nationality</label><br>
-            <input type="radio" id="n1" name="nat" value="Domestic" oninput="myfunction4()" >
+            <input type="radio" id="n1" name="nat" value="domestic" oninput="myfunction4()" >
             <label for="n1">Domestic</label>
-            <input type="radio" id="n2" name="nat" value="Foreign" oninput="myfunction4()">
+            <input type="radio" id="n2" name="nat" value="foreign" oninput="myfunction4()">
             <label for="n2">Foreign</label></p>
           </div>
           <div id="d4" style="color:red;"></div>
           <div class="col-md-12"><label class="labels">Skill-Set</label><br>
-            <input type="radio" id="s1" name="skill" value="Batsman" required>
+            <input type="radio" id="s1" name="skill" value="batsman" required>
               <label for="s1">Batsman</label>
-              <input type="radio" id="s2" name="skill" value="Bowler">
+              <input type="radio" id="s2" name="skill" value="bowler">
               <label for="s2">Bowler</label>
-              <input type="radio" id="s3" name="skill" value="All-Rounder">
+              <input type="radio" id="s3" name="skill" value="all-Rounder">
               <label for="s3">All-Rounder</label>
           </div>
             <div class="col-md-12"><label class="labels">Base Price</label><input type="text" class="form-control" placeholder="Enter Base Price" name="bprice" id="bprice" pattern="[0-9]{1,8}" oninput="myfunction5()" title="Base Price Should be Numeric and Not Greater than INR 20000000" required></div>
@@ -40,7 +40,7 @@
             <div id="d7" style="color:red;"></div>
             <div class="col-md-12"><label class="labels">Email ID</label><input type="email" class="form-control" placeholder="Enter Email" name="email" id="email" pattern="^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$" oninput="myfunction6()" title=" Email must Contain @ and then ." required></div>
             <div id="d6" style="color:red;"></div>
-            <div class="col-md-12"><label class="labels">Unique Id</label><input type="text" class="form-control"  placeholder="Enter Unique Id(Aadhar for IN)" name="uid" id="uid" required></div>
+            <div class="col-md-12"><label class="labels">Identity Number</label><input type="text" class="form-control"  placeholder="Enter Unique Id Number(Aadhar for IN)" name="uid" id="uid" required></div>
         </div>
     </div>
 </div>
@@ -54,7 +54,7 @@
         <div id="d8" style="color:red;"></div>
         <div class="col-md-12"><label class="labels">Password</label><input type="password" class="form-control"  placeholder="Enter Password" name="pass" id="pass" oninput="myfunction9()" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"  title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required></div>
         <div id="d9" style="color:red;"></div>
-        <div class="col-md-12"><label class="labels">Player Image</label><p>Image Size must be 1200px X 1200px</p><input type="file" class="form-control"></div>
+        <div class="col-md-12"><label class="labels">Player Image</label><p>Image Size must be 1200px X 1200px</p><input type="file" name="image" class="form-control"></div>
       </div>
     </div>
     <div class="p-3 py-5">
@@ -62,21 +62,22 @@
           <h4 class="text-right">T20 Stats</h4>
       </div>
       <div class="row mt-2">
-        <div class="col-md-4"><label class="labels">Total Matches</label><input type="number" class="form-control" placeholder="total matches" value=""></div>
-        <div class="col-md-4"><label class="labels">Total Innings</label><input type="number" class="form-control" placeholder="total innings" value=""></div>
-        <div class="col-md-4"><label class="labels">Runs</label><input type="number" class="form-control" placeholder="runs" value=""></div>
-        <div class="col-md-4"><label class="labels">Wicket</label><input type="number" class="form-control" placeholder="wicket" value=""></div>
-        <div class="col-md-4"><label class="labels">Fifties</label><input type="number" class="form-control" placeholder="fifties" value=""></div>
-        <div class="col-md-4"><label class="labels">Hundreds</label><input type="number" class="form-control" placeholder="hundreds" value=""></div>
-        <div class="col-md-4"><label class="labels">Economy</label><input type="number" class="form-control" placeholder="economy" value=""></div>
-        <div class="col-md-4"><label class="labels">Fifer</label><input type="number" class="form-control" placeholder="fifer" value=""></div>
-        <div class="col-md-4"><label class="labels">Strike Rate<input type="number" class="form-control" placeholder="strike rate" value=""></div>
+        <div class="col-md-4"><label class="labels">Total Matches</label><input type="number" class="form-control" name="matches" placeholder="total matches" value=""></div>
+        <div class="col-md-4"><label class="labels">Total Innings</label><input type="number" class="form-control"name="innings"  placeholder="total innings" value=""></div>
+        <div class="col-md-4"><label class="labels">Runs</label><input type="number" class="form-control" name="runs" placeholder="runs" value=""></div>
+        <div class="col-md-4"><label class="labels">Wicket</label><input type="number" class="form-control" name="wicket" placeholder="wicket" value=""></div>
+        <div class="col-md-4"><label class="labels">Fifties</label><input type="number" class="form-control" name="fifties" placeholder="fifties" value=""></div>
+        <div class="col-md-4"><label class="labels">Hundreds</label><input type="number" class="form-control" name="hundreds" placeholder="hundreds" value=""></div>
+        <div class="col-md-4"><label class="labels">Economy</label><input type="number" class="form-control" name="economy" placeholder="economy" value=""></div>
+        <div class="col-md-4"><label class="labels">Fifer</label><input type="number" class="form-control" name="fifer" placeholder="fifer" value=""></div>
+        <div class="col-md-4"><label class="labels">Strike Rate<input type="number" class="form-control" name="strike_rate" placeholder="strike rate" value=""></div>
       </div>
     </div>
 </div>
 </div>
-<div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Register</button></div>
+<div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Register</button></div>
 </div>
+</form>
 @include('footer')
 <script>
 function myfunction1(){

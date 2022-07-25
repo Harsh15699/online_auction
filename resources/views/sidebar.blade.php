@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-  	<title>Sidebar 05</title>
+  	<title>Admin Panel</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -21,15 +21,15 @@
               <h1 style="color:white;font-size:180%;">Admin Panel</h1>
             </div>
             <div class="col-1">
-              <a href="#" style="color:white;font-size:250%;"><i class="fa fa-solid fa-power-off"></i></a>
+              <a href="{{ route('admin.logout') }}" style="color:white;font-size:250%;"><i class="fa fa-solid fa-power-off"></i></a>
             </div>
           </div>
 	        <ul class="list-unstyled components mb-5">
 	          <li class="active">
-	            <a href="#"> Home</a>
+	            <a href="{{ route('admin.dashboard') }}"> Home</a>
 	          </li>
 	          <li>
-	              <a href="#"> Users</a>
+	              <a href="{{ route('admin.users') }}"> Users</a>
 	          </li>
 	          <li>
               <a href="{{ route('admin.products') }}"> Products</a>
@@ -38,13 +38,13 @@
               <a href="{{ route('admin.commodity_auction') }}"> Commodity Auction</a>
 	          </li>
 	          <li>
-              <a href="#"> Players</a>
+              <a href="{{ route('admin.players') }}"> Players</a>
 	          </li>
 	          <li>
-              <a href="#"> Teams</a>
+              <a href="{{ route('admin.teams') }}"> Teams</a>
 	          </li>
 	          <li>
-              <a href="#"> Cricket Auction</a>
+              <a href="{{ route('admin.cricket_auction') }}"> Cricket Auction</a>
 	          </li>
 	        </ul>
 	        <div class="footer">

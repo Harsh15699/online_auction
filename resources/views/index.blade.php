@@ -12,14 +12,14 @@
     </div>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <a class="nav-link" href="{{ route('cricket_auction') }}"><img src="{{ url('/images/index/') }}/cricket_auction.jpg" class="d-block w-100" alt="..." style=" width:100%; height: 500px !important;"></a>
+        <a class="nav-link" href="{{ route('cricket_auction') }}"><img src="{{ url('/images/index/') }}/cricket_auction.png" class="d-block w-100" alt="..." style=" width:100%; height: 500px !important;"></a>
         <div class="carousel-caption d-none d-md-block">
           <h5 class="fw-bolder">Cricket Auction</h5>
           <p>Click now and get ready for the action</p>
         </div>
       </div>
       <div class="carousel-item">
-        <a class="nav-link" href="{{ route('commodity_auction') }}"><img src="{{ url('/images/index/') }}/commodity_auction.jpg" class="d-block w-100" alt="..." style=" width:90%; height: 500px !important;"></a>
+        <a class="nav-link" href="{{ route('commodity_auction') }}"><img src="{{ url('/images/index/') }}/commodity_auction.png" class="d-block w-100" alt="..." style=" width:90%; height: 500px !important;"></a>
         <div class="carousel-caption d-none d-md-block">
           <h5 class="fw-bolder">Commodity Auction</h5>
           <p>Get ready to Bid or Getting Bids for your product</p>
